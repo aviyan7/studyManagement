@@ -1,0 +1,112 @@
+<!--<div class="row" *ngFor="let sub of subGroups; let i = index;">-->
+<!--  <div class="card rounded">-->
+<!--    <div class="card-body mb-4">-->
+<!--      <h2>{{sub?.name}}</h2>-->
+<!--      <p class="mb-3 tx-14">{{sub?.description}}</p>-->
+<!--&lt;!&ndash;      <img *ngIf="sub?.images" class="img-fluid" src="assets\{{sub?.images}}" alt="">&ndash;&gt;-->
+<!--      <p>Total Users: {{sub?.users?.length}}<span-->
+<!--        class="m-lg-5">Total Posts: {{sub?.numberOfPosts}}</span></p>-->
+<!--    </div>-->
+<!--    <div class="card-footer" *ngIf="sub?.canJoinGroup">-->
+<!--      <div class="d-flex post-actions">-->
+<!--        <a href="javascript:;" class="d-flex align-items-center text-muted m-lg-2">-->
+<!--          <i class="fa fa-plus"></i><strong>Join Group</strong>-->
+<!--        </a>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<app-top-bar></app-top-bar>
+<div class="row">
+  <div class="col-md-2">
+    <app-side-bar></app-side-bar>
+  </div>
+  <div class="col-md-10 scrollable-section">
+    <div class="row">
+      <div [ngClass]="hasPressed ? 'col-md-7  ps-5' : 'col-md-9  ps-5'">
+        <!--    scrollable-section-->
+        <div class="mt-5 mb-5" style="width: 100%; border: none; cursor: pointer" *ngFor="let sub of subGroups; let i = index">
+          <!--       (click)="getRelatedArticles(post?.id, post?.title)" -->
+          <!--      [ngStyle]="{'background' : sub?.id === relatedArticleId ? '#eceefd' : ''}"-->
+          <div class="card card-body shadow card-main" >
+            <div class="row">
+              <div>
+                <div class="col-md-12 row">
+                  <div class="col-md-10">
+                    <h4 class="card-title mb-3" style="font-family: 'poppins', sans-serif; color: #4f4d4d"><b>{{sub?.name}}</b></h4>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3" >
+                      <strong style="color: #3d5af1">Posted By: </strong> <span>{{sub?.userName | titlecase}}</span>
+                    </div>
+                    <div class="col-md-4" >
+                      <strong style="color: #3d5af1">Posted At: </strong> <span>{{sub?.subGroupName?.name | titlecase}}</span>
+                    </div>
+                    <div class="col-md-5">
+                      <strong><span style="color: #3d5af1">Posted on</span>: </strong>{{sub?.createdDate | date : 'MMM dd, yyyy | hh:mm:ss a'}}
+                    </div>
+                    <hr>
+                  </div>
+                  <div class="col-md-2 d-flex justify-content-end" style="margin-top: -0.5rem;">
+                    <div>
+                      <button style="border: none; border-radius: 50%" class="btn-sm mt-2" ngbTooltip="Expand / Collapse"
+                              *ngIf="sub?.description.length > 115">
+                        <span [ngClass]="!isNotCollapsed[i] ? 'fa fa-solid fa-angle-down' : 'fa fa-solid fa-angle-up'" style="color: #3d5af1" (click)="collapse(i, $event)"></span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-md-1 d-flex justify-content-end" *ngIf="sub?.description.length > 115">
+                    <button style="border: none; border-radius: 50%; height: 25px" class="btn-sm" ngbTooltip="Expand / Collapse">
+                      <span [ngClass]="!isNotCollapsed[i] ? 'fa fa-solid fa-angle-down' : 'fa fa-solid fa-angle-up'" style="color: #3d5af1" (click)="collapse(i, $event)"></span>
+                    </button>
+                  </div>
+                </div>
+                <div *ngIf="!isNotCollapsed[i] && sub?.description.length > 115">
+                  <div class="row">
+                    <div class="col-md-11">
+                    <span class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">
+                      {{sub?.description.substring(0, 115)}}
+                      <strong> ...</strong>
+                    </span>
+                    </div>
+                  </div>
+                </div>
+                <ng-container>
+                  <div [ngbCollapse]="!isNotCollapsed[i] && sub?.description.length > 115">
+                    <p class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">{{sub?.description}}</p>
+                  </div>
+                </ng-container>
+                <div *ngIf="sub?.canJoinGroup">
+                  <hr>
+                  <a href="javascript:;" class="d-flex align-items-center text-muted m-lg-2">
+                    <i class="fa fa-plus" (click)="onJoinSubGroup(sub?.id)"></i><strong>{{' '+ 'Join Group'}}</strong>
+                  </a>
+                </div>
+                <!--            <p class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">{{sub?.content}}</p>-->
+
+                <!--            <div class="row">-->
+                <!--              <div class="col-md-7" >-->
+                <!--                <strong style="color: #3d5af1">Posted By: </strong> <span>{{sub?.userName | titlecase}}</span>-->
+                <!--              </div>-->
+                <!--              <div class="col-md-5">-->
+                <!--                <strong><span style="color: #3d5af1">Posted on</span>: </strong>{{post?.createdDate | date : 'MMM dd, yyyy | hh:mm:ss a'}}-->
+                <!--              </div>-->
+                <!--            </div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<app-scrolltotop></app-scrolltotop>
+
+<!--<ngx-spinner>-->
+<!--  <app-spinner></app-spinner>-->
+<!--</ngx-spinner>-->
+

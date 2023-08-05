@@ -1,0 +1,15 @@
+.round:hover {
+  color: #fcfcfc;
+  background: #455be1;
+}
+
+.round {
+  border-radius: 10px;
+}
+
+.scrollable-section {
+  overflow: auto;
+  height: 90vh;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}

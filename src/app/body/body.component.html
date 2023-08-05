@@ -1,0 +1,179 @@
+<div class="no-posts" *ngIf="!allPosts?.length">
+  <div class="d-flex justify-content-center" style="margin-top: 10rem">
+    <div>
+      <h1>No Posts available.</h1><br>
+      <h3>Please Create a post or join a group to view post details !</h3>
+      <h3 class="d-flex justify-content-center">
+        <span [routerLink]="['/post']" style="color: #3d5af1; cursor: pointer">Click here</span>
+        &nbsp;
+        <span>to start posting.</span>
+      </h3>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div [ngClass]="hasPressed ? 'col-md-7  ps-5' : 'col-md-9  ps-5'">
+<!--    scrollable-section-->
+    <div class="mt-5 mb-5" style="width: 100%; border: none; cursor: pointer" *ngFor="let post of allPosts; let i = index">
+<!--       (click)="getRelatedArticles(post?.id, post?.title)" -->
+      <div class="card card-body shadow card-main" [ngStyle]="{'background' : post?.id === relatedArticleId ? '#eceefd' : ''}">
+        <div class="row">
+<!--          <div class="align-content-center" [ngClass]=" isAdmin ? '' : 'col-md-1'">-->
+<!--            <div class="ms-3">-->
+<!--              <div >//*ngIf="!isAdmin;"-->
+<!--                <div class="d-flex justify-content-center" style="transform: scale(1.5,1.25)"-->
+<!--                     [ngStyle]="{'transform' :  hasUpVoted[i] ? 'scale(1.85,1.6)' : 'scale(1.5,1.25)' }">-->
+<!--                  <a class="fa fa-solid fa-arrow-up" style="text-decoration: none" (click)="upVote(post.id, $event)"-->
+<!--                     [ngStyle]="{'color' :  hasUpVoted[i] ? '#3d5af1' : 'gray' }"></a>-->
+<!--                </div>-->
+<!--                <div class="d-flex justify-content-center mt-1 mb-1"><span style="font-size: 17px; font-weight: 600"-->
+<!--                                                                           [ngStyle]="{'color' :  hasUpVoted[i] ? '#3d5af1' : (hasDownVoted[i] ? 'red' : 'gray') }">{{post?.vote}}</span></div>-->
+<!--                <div class="d-flex justify-content-center" style="transform: scale(1.5,1.25)"-->
+<!--                     [ngStyle]="{'transform' :  hasDownVoted[i] ? 'scale(1.85,1.6)' : 'scale(1.5,1.25)' }">-->
+<!--                  <a class="fa fa-solid fa-arrow-down" style="text-decoration: none" (click)="downVote(post.id, $event)"-->
+<!--                     [ngStyle]="{'color' :  hasDownVoted[i] ? 'red' : 'gray' }"></a>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+          <div [ngClass]="isAdmin ? 'col-md-12 ms-3 pe-5' : 'col-md-11'">
+            <div class="col-md-12 row">
+              <div class="col-md-10">
+                <h4 class="card-title mb-3" style="font-family: 'poppins', sans-serif; color: #4f4d4d"><b>{{post?.postName}}</b></h4>
+              </div>
+              <div class="row">
+                <div class="col-md-3" >
+                  <!--                *ngIf="isAdmin && !post?.stay_anonymous"-->
+                  <strong style="color: #3d5af1">Posted By: </strong> <span>{{post?.userName | titlecase}}</span>
+                </div>
+                <div class="col-md-4" >
+                  <strong style="color: #3d5af1">Posted At: </strong> <span>{{post?.subGroupName?.name | titlecase}}</span>
+                </div>
+                <div class="col-md-5">
+                  <strong><span style="color: #3d5af1">Posted on</span>: </strong>{{post?.createdDate | date : 'MMM dd, yyyy | hh:mm:ss a'}}
+                </div>
+                <hr>
+              </div>
+              <div class="col-md-2 d-flex justify-content-end" style="margin-top: -0.5rem;" *ngIf="isAdmin">
+                <div>
+                  <strong>Votes</strong>
+                  <br>
+                  <span class="fa-solid fa-circle-check fa-xl me-1"></span>
+                  <span style="font-size: 20px"><strong>{{post?.vote}}</strong></span>
+                  <br>
+                  <button style="border: none; border-radius: 50%" class="btn-sm mt-2" ngbTooltip="Expand / Collapse"
+                          *ngIf="post?.description.length > 115">
+                    <span [ngClass]="!isNotCollapsed[i] ? 'fa fa-solid fa-angle-down' : 'fa fa-solid fa-angle-up'" style="color: #3d5af1" (click)="collapse(i, $event)"></span>
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="post?.userName === loggedInUserId && !isAdmin"
+                   class="col-md-1 d-flex justify-content-end">
+                <span class="fa-solid fa-flag" ngbTooltip="Your Posts" style="color: #3d5af1"></span>
+              </div>
+              <div class="col-md-1 d-flex justify-content-end" *ngIf="post?.description.length > 115 && !isAdmin">
+                <button style="border: none; border-radius: 50%; height: 25px" class="btn-sm" ngbTooltip="Expand / Collapse">
+                  <span [ngClass]="!isNotCollapsed[i] ? 'fa fa-solid fa-angle-down' : 'fa fa-solid fa-angle-up'" style="color: #3d5af1" (click)="collapse(i, $event)"></span>
+                </button>
+              </div>
+            </div>
+            <div *ngIf="!isNotCollapsed[i] && post?.description.length > 115">
+              <div class="row">
+                <div class="col-md-11">
+                    <span class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">
+                      {{post?.description.substring(0, 115)}}
+                      <strong> ...</strong>
+                    </span>
+                </div>
+              </div>
+            </div>
+            <ng-container>
+              <div [ngbCollapse]="!isNotCollapsed[i] && post?.description.length > 115">
+                <p class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">{{post?.description}}</p>
+              </div>
+              <span *ngIf="post?.comment?.length > 1"><strong>Comments</strong><hr></span>
+<!--              <img *ngIf="post?.images" class="img-fluid" src="assets\{{post?.images}}" alt="">-->
+              <ng-container *ngFor="let data of post?.comment; let j = index;">
+                <div *ngIf="showAllComments ?  j : j<4" class="row">
+                  <h6>{{data?.text}}</h6>
+                  <div class="col-md-7">
+                    <span>Posted By:{{data?.userName | titlecase}}</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span> Posted at: {{data?.createdDate | date}} </span>
+                  </div>
+<!--                  <hr>-->
+                </div>
+              </ng-container>
+            </ng-container>
+<!--            <p class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">{{post?.content}}</p>-->
+            <hr>
+<!--            <div class="row">-->
+<!--              <div class="col-md-7" >-->
+<!--                <strong style="color: #3d5af1">Posted By: </strong> <span>{{post?.userName | titlecase}}</span>-->
+<!--              </div>-->
+<!--              <div class="col-md-5">-->
+<!--                <strong><span style="color: #3d5af1">Posted on</span>: </strong>{{post?.createdDate | date : 'MMM dd, yyyy | hh:mm:ss a'}}-->
+<!--              </div>-->
+<!--            </div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--  <div [ngClass]="hasPressed ? 'col-md-5 scrollable-section ps-5' : 'col-md-3 scrollable-section'">-->
+<!--    <div class="d-flex justify-content-center" *ngIf="!isAdmin">-->
+<!--      <button class="btn btn-primary mt-5 mb-4" style="width: 70%; background: #3d5af1;" [routerLink]="['/post-grievance']">+ Add new Posts</button>-->
+<!--    </div>-->
+<!--    <div class="card shadow p-3 d-flex justify-content-center me-3" *ngIf="hasPressed" style="border: none"-->
+<!--    [ngStyle]=" {'margin-top' : isAdmin ? '5rem' : ''} ">-->
+<!--      <div class="row">-->
+<!--        <div style="text-align: justify" class="col-md-10">-->
+<!--          <h6 style="text-align: justify">Posts similar to <b>{{relatedArticles[relatedArticles.length - 1]}}</b></h6>-->
+<!--        </div>-->
+<!--        <div style="text-align: end; cursor: pointer" class="col-md-2">-->
+<!--          <span (click)="close()" class="text-danger">close</span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--&lt;!&ndash;      <div class="card-body scrollable-section-similar-post">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div *ngFor="let similar of relatedArticles; let l = last; let ii = index">&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="card card-body shadow mb-4" *ngIf="!l" style="background: #eceefd">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="card-body row">&ndash;&gt;-->
+<!--&lt;!&ndash;              <div class="col-md-12">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="pe-5">&ndash;&gt;-->
+<!--&lt;!&ndash;                  <div class="col-md-11 row">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="col-md-10">&ndash;&gt;-->
+<!--&lt;!&ndash;                      <h4 class="card-title mb-3" style="font-family: 'poppins', sans-serif; color: #4f4d4d"><b>{{similar?.title}}</b></h4>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="col-md-2 custom" style="margin-top: -1.5rem;" *ngIf="isAdmin">&ndash;&gt;-->
+<!--&lt;!&ndash;                      <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <strong>Votes</strong><br>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <i class="fa-solid fa-circle-check fa-xl me-1"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <strong style="font-size: 20px">{{similar?.vote}}</strong>&ndash;&gt;-->
+<!--&lt;!&ndash;                      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                  <h4 class="card-title mb-3" style="font-family: 'poppins', sans-serif; color: #4f4d4d"><b>{{similar?.title}}</b></h4>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                  <p class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">{{similar?.content}}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <hr>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <strong><span style="color: #3d5af1">Posted on</span>: </strong>{{similar?.created_at | date : 'MMM dd, yyyy | hh:mm:ss a'}}&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--    </div>-->
+<!--  </div>-->
+</div>
+
+<app-scrolltotop></app-scrolltotop>
+
+<!--<ngx-spinner>-->
+<!--  <app-spinner></app-spinner>-->
+<!--</ngx-spinner>-->
+
+

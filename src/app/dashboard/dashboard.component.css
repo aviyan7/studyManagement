@@ -1,0 +1,24 @@
+@import "../dashboard.css";
+
+.dashboard-background {
+  background-color: #fcfcfc;
+}
+
+.scrollable-section {
+  overflow: auto;
+  height: 92vh;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.scrollable-section::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable-section::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.scrollable-section::-webkit-scrollbar-track {
+  background-color: transparent;
+}
