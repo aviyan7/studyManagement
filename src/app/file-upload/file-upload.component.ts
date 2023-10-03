@@ -6,7 +6,6 @@ import {NgToastService} from "ng-angular-popup";
 import {ApiService} from "../../apiService";
 import {HttpEventType, HttpResponse} from "@angular/common/http";
 
-
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',

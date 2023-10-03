@@ -1,0 +1,32 @@
+<button (click)="close()"></button>
+
+<div class="no-posts" *ngIf="!allPosts?.length">
+  <div class="d-flex justify-content-center" style="margin-top: 10rem">
+    <div>
+      <h1>No Posts available.</h1><br>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <ng-container *ngFor="let post of allPosts; let i = index" class="mb-1">
+    <div class="card card-body shadow card-main">
+      <h4 class="card-title mb-3" style="font-family: 'poppins', sans-serif; color: #4f4d4d"><b>{{post?.postName}}</b></h4>
+      <img *ngIf="post?.images?.length > 0" class="img-fluid" src="assets\image\{{post?.images}}" alt="" height="400px" width="600px">
+      <span *ngIf="post?.images?.length > 0"><hr></span>
+<!--      <button class="btn btn-primary" (click)="onWriteComment(post)"><i class="fa fa-comment"></i> Comments</button>-->
+      <span *ngIf="post?.comment?.length > 0"><hr></span>
+      <ng-container *ngFor="let data of post?.comment; let j = index; let l = last;">
+        <div *ngIf="showAllComments ?  j : j<4" class="row">
+          <h6>{{data?.text}}</h6>
+          <div class="col-md-7">
+            <span>Posted By:{{data?.userName | titlecase}}</span>
+          </div>
+          <div class="col-md-5">
+            <span> Posted at: {{data?.createdDate | date}} </span>
+          </div>
+          <span *ngIf="!l"><hr></span>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>

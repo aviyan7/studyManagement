@@ -1,4 +1,5 @@
 import { Component, HostListener, Inject } from '@angular/core';
+import {ViewportScroller} from "@angular/common";
 
 @Component({
   selector: 'app-scrolltotop',
@@ -6,15 +7,21 @@ import { Component, HostListener, Inject } from '@angular/core';
   styleUrls: ['./scrolltotop.component.css']
 })
 export class ScrolltotopComponent {
-  showScrollButton = false;
-
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    const scrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    this.showScrollButton = scrollHeight > 250;
+  constructor(private viewportScroller: ViewportScroller) {
   }
+  // showScrollButton = false;
+  //
+  // @HostListener('window:scroll', [])
+  // onWindowScroll() {
+  //   const scrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+  //   this.showScrollButton = scrollHeight > 250;
+  // }
+  //
+  // scrollToTop() {
+  //   window.scrollTo({ top: 0, behavior: 'smooth' });
+  // }
 
   scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.viewportScroller.scrollToPosition([0, 0]);
   }
 }

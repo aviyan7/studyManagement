@@ -26,8 +26,7 @@ export class HomePageComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private apiService: ApiService,
-    private toastService: NgToastService,
-    private ngxToastr: ToastrService
+    private toastService: NgToastService
   ) { }
 
   ngOnInit() {

@@ -2,6 +2,9 @@ import {Component, HostListener, OnInit} from '@angular/core';
 import {ApiService} from "../../apiService";
 import {NgToastService} from "ng-angular-popup";
 import {LocalStorageUtil} from "../../localStorageUtil";
+import {error} from "@angular/compiler-cli/src/transformers/util";
+import {NgxSpinnerService} from "ngx-spinner";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sub-group',
@@ -15,7 +18,9 @@ export class SubGroupComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private toastr: NgToastService
+    private toastr: NgToastService,
+    private spinner: NgxSpinnerService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -34,18 +39,19 @@ export class SubGroupComponent implements OnInit {
       },
       complete: () => {
         this.subGroups.forEach((f: any)=>{
+          f?.users?.length > 0 ?
           f?.users?.forEach((g: any)=>{
             if(g?.id == LocalStorageUtil.getStorage().id){
               f.canJoinGroup = false;
-            }
-            else if(!g?.id){
-              f.canJoinGroup = false;
+              console.log("chalxa");
             }
             else {
                 f.canJoinGroup = true;
             }
-          })
+          }) :
+            f.canJoinGroup = true;
         })
+        console.log("sub",this.subGroups);
       }
     })
   }
@@ -93,11 +99,37 @@ export class SubGroupComponent implements OnInit {
   }
 
   onJoinSubGroup(id: any){
+    this.spinner.show();
     this.apiService.joinsubGroup(id).subscribe({
       next: (response: any)=>{
-        this.toastr.success({summary: 'Success', detail: 'Group Joined Successfully', duration: 2000})
+        this.spinner.hide();
+        this.toastr.success({summary: 'Success', detail: 'Group Joined Successfully', duration: 2000});
+        this.subGroups = [];
+        this.getAllSubGroups();
+      }, error: (err: any)=>{
+        this.spinner.hide();
+        this.toastr.error({detail: 'Error', summary: 'Could not join group', duration: 2000});
       }
     })
+  }
+
+  onRemoveSubGroup(id: any){
+    this.spinner.show();
+    this.apiService.removeSubGroup(id).subscribe({
+      next: (response: any)=>{
+        this.spinner.hide();
+        this.toastr.success({summary: 'Success', detail: 'Group Removed Successfully', duration: 2000});
+        this.subGroups = [];
+        this.getAllSubGroups();
+      }, error: (err: any)=>{
+        this.spinner.hide();
+        this.toastr.error({detail: 'Error', summary: 'Could not be removed from group', duration: 2000});
+      }
+    })
+  }
+
+  addSubGroup(){
+    this.router.navigate(['/create-group']);
   }
 
 }

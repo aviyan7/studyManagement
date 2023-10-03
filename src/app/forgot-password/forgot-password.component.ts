@@ -60,12 +60,9 @@ export class ForgotPasswordComponent implements OnInit {
             this.toastr.error({detail: 'Error', summary: 'Error resetting password', duration: 2000})
           })
       } else {
-        const emailData =
-          {
-            email: this.forgotPassword?.get('email')?.value
-          }
+          // const { mail } = this.forgotPassword?.get('email')?.value;
         this.spinner.show();
-        this.apiService.forgotPassword(emailData).subscribe(res=> {
+        this.apiService.forgotPassword(this.forgotPassword?.get('email')?.value).subscribe(res=> {
           this.spinner.hide();
           this.sentVerificationCode = true;
           this.toastr.success({detail: 'Success', summary: 'Verification code sent to submitted email', duration: 3000});

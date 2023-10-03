@@ -7,6 +7,7 @@ import {HttpEventType, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Location} from "@angular/common";
 import {UntypedFormBuilder, Validators} from "@angular/forms";
+import {NgxSpinnerService} from "ngx-spinner";
 // import {ImageCompressorService} from "../../../feature_module/services/image-compressor.service";
 // import {FileUploadService} from "../../../feature_module/services/file-upload.service";
 
@@ -26,7 +27,8 @@ export class CreatePostComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private  apiService: ApiService,
-              private toastr: NgToastService) { }
+              private toastr: NgToastService,
+              private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.buildForm();
@@ -56,7 +58,8 @@ export class CreatePostComponent implements OnInit {
     this.postForm = this.formBuilder.group({
       postName: [undefined, Validators.required],
       description: [undefined, Validators.required],
-      subGroup: [undefined, Validators.required]
+      subGroup: [undefined, Validators.required],
+      image: [undefined]
     });
   }
 
@@ -65,20 +68,26 @@ export class CreatePostComponent implements OnInit {
     if (this.postForm.invalid) {
       return;
     } else {
+      this.spinner.show();
       const post =
         {
           postName: this.postForm?.get('postName')?.value,
           description: this.postForm?.get('description')?.value,
-          subGroupId: this.postForm?.get('subGroup')?.value
+          subGroupId: this.postForm?.get('subGroup')?.value,
+          images: this.postForm?.get('image')?.value
         }
       console.log(post);
       this.apiService.post(post).subscribe(res => {
         console.log(res);
+        this.spinner.hide();
         this.toastr.success({detail: 'Success', summary: 'Post Created Successfully.', duration: 2000});
         this.postForm.get('postName')?.patchValue(null);
         this.postForm.get('description')?.patchValue(null);
+        this.postForm.get('subGroup')?.patchValue(null);
+        this.postForm.get('image')?.patchValue(null);
         this.isSubmitted = false;
       }, error => {
+        this.spinner.hide();
         console.log(error);
         this.toastr.error({detail: 'Error', summary: 'Failed to create Post', duration: 2000})
       });
@@ -87,8 +96,7 @@ export class CreatePostComponent implements OnInit {
   }
 
   getImages(data: any){
-    // this.postRequestModel.images = data;
-    // console.log("k xa",this.postRequestModel.images);
+    this.postForm?.get('image')?.patchValue(data);
   }
 
 }

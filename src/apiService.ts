@@ -47,6 +47,10 @@ export class ApiService {
     return this.httpClient.get(ApiService.baseApi+'subGroup/join/'+id);
   }
 
+  removeSubGroup(id: any){
+    return this.httpClient.get(ApiService.baseApi+'subGroup/remove/'+id);
+  }
+
   getLoggedInUserDetails() {
     return this.httpClient.get(ApiService.baseApi + 'user', {withCredentials: true});
   }
@@ -71,8 +75,8 @@ export class ApiService {
     return this.httpClient.post( ApiService.baseApi + 'post', post, {withCredentials: true})
   }
 
-  forgotPassword(email: any) {
-    return this.httpClient.post(ApiService.baseApi + 'forgot-password/', email)
+  forgotPassword(email: string) {
+    return this.httpClient.post(ApiService.baseApi + 'auth/email/forgot-password', email, {withCredentials: true})
   }
 
   resetPassword(resetData: any) {
@@ -118,6 +122,18 @@ export class ApiService {
 
   getFiles(): Observable<any> {
     return this.httpClient.get(ApiService.baseApi+'/files');
+  }
+
+  postComment(data: any): Observable<any> {
+    return this.httpClient.post(ApiService.baseApi+'comments',data);
+  }
+
+  createSubGroup(data: any): Observable<any> {
+    return this.httpClient.post(ApiService.baseApi+'subGroup',data);
+  }
+
+  searchPost(data: string): Observable<any> {
+    return this.httpClient.get(ApiService.baseApi+'post/search?keyword='+data);
   }
 
 }

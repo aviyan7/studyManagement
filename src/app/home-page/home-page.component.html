@@ -28,7 +28,8 @@
 
           <!-- Email input -->
           <div class="form-outline mb-4">
-            <label class="form-label mb-1" for="form3Example3">Email address</label><button (click)="onremove()"></button>
+            <label class="form-label mb-1" for="form3Example3">Email address</label>
+            <button (click)="onremove()"></button>
             <input type="email" id="form3Example3" class="form-control form-control-lg"
                    [ngClass]="{'is-invalid' : isSubmitted && loginForm.controls['email'].errors}"
                    formControlName="email"

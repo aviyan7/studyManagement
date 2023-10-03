@@ -1,0 +1,64 @@
+<div class="row">
+  <app-top-bar></app-top-bar>
+</div>
+<div class="row" style="background: #fcfcfc">
+  <div class="col-md-2">
+    <app-side-bar></app-side-bar>
+  </div>
+  <div class="col-md-10 scrollable-section">
+    <div class="col-md-8 h-100 offset-xl-1 mt-5">
+      <div class="card card-body border-0 shadow">
+        <form [formGroup]="subGroupForm">
+          <h1 style="border-bottom: 2px solid #8899f3;"><strong>Add Group</strong></h1>
+
+          <!--          <div class="d-flex justify-content-end mt-3">-->
+          <!--            <label for="anonymous" class="me-2"><strong>Stay Anonymous to Admin: </strong></label>-->
+          <!--            <label class="switch">-->
+          <!--              <input type="checkbox" id="anonymous" formControlName="stayAnonymous">-->
+          <!--              <span class="slider round"></span>-->
+          <!--            </label>-->
+          <!--          </div>-->
+
+          <div class="form-outline mb-4">
+            <label class="form-label mb-1"><strong>Name</strong></label>
+            <input type="text" class="form-control form-control-lg"
+                   [ngClass]="{'is-invalid' : isSubmitted && subGroupForm.controls['name'].errors}"
+                   formControlName="name"
+                   placeholder="Enter the Name of the Group"/>
+            <div *ngIf="isSubmitted && subGroupForm.controls['name'].errors" class="text-danger">
+              <div *ngIf="isSubmitted && subGroupForm.controls['name'].errors['required']">
+                Name is required
+              </div>
+            </div>
+          </div>
+
+          <div class="form-outline mb-4">
+            <label class="form-label mb-1" for="form3Example3"><strong>Description</strong></label>
+            <textarea id="form3Example3" class="form-control form-control-lg"
+                      [ngClass]="{'is-invalid' : isSubmitted && subGroupForm.controls['description'].errors}"
+                      style="width: 100%; height: 3in;"
+                      formControlName="description"
+                      placeholder="Enter the description">
+          </textarea>
+            <div *ngIf="isSubmitted && subGroupForm.controls['description'].errors" class="text-danger">
+              <div *ngIf="isSubmitted && subGroupForm.controls['description'].errors['required']">
+                Description is required
+              </div>
+            </div>
+          </div>
+
+          <app-file-upload (image)="getImages($event)"></app-file-upload>
+
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button type="submit" class="btn btn-primary btn-lg"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem; background: #3d5af1" (click)="submit()">Create Group</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner>
+  <app-spinner></app-spinner>
+</ngx-spinner>

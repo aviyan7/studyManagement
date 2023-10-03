@@ -4,7 +4,7 @@
       <h1>No Posts available.</h1><br>
       <h3>Please Create a post or join a group to view post details !</h3>
       <h3 class="d-flex justify-content-center">
-        <span [routerLink]="['/post']" style="color: #3d5af1; cursor: pointer">Click here</span>
+        <span [routerLink]="['/group']" style="color: #3d5af1; cursor: pointer">Click here</span>
         &nbsp;
         <span>to start posting.</span>
       </h3>
@@ -54,19 +54,19 @@
                 </div>
                 <hr>
               </div>
-              <div class="col-md-2 d-flex justify-content-end" style="margin-top: -0.5rem;" *ngIf="isAdmin">
-                <div>
-                  <strong>Votes</strong>
-                  <br>
-                  <span class="fa-solid fa-circle-check fa-xl me-1"></span>
-                  <span style="font-size: 20px"><strong>{{post?.vote}}</strong></span>
-                  <br>
-                  <button style="border: none; border-radius: 50%" class="btn-sm mt-2" ngbTooltip="Expand / Collapse"
-                          *ngIf="post?.description.length > 115">
-                    <span [ngClass]="!isNotCollapsed[i] ? 'fa fa-solid fa-angle-down' : 'fa fa-solid fa-angle-up'" style="color: #3d5af1" (click)="collapse(i, $event)"></span>
-                  </button>
-                </div>
-              </div>
+<!--              <div class="col-md-2 d-flex justify-content-end" style="margin-top: -0.5rem;" *ngIf="isAdmin">-->
+<!--                <div>-->
+<!--                  <strong>Votes</strong>-->
+<!--                  <br>-->
+<!--                  <span class="fa-solid fa-circle-check fa-xl me-1"></span>-->
+<!--                  <span style="font-size: 20px"><strong>{{post?.vote}}</strong></span>-->
+<!--                  <br>-->
+<!--                  <button style="border: none; border-radius: 50%" class="btn-sm mt-2" ngbTooltip="Expand / Collapse"-->
+<!--                          *ngIf="post?.description.length > 115">-->
+<!--                    <span [ngClass]="!isNotCollapsed[i] ? 'fa fa-solid fa-angle-down' : 'fa fa-solid fa-angle-up'" style="color: #3d5af1" (click)="collapse(i, $event)"></span>-->
+<!--                  </button>-->
+<!--                </div>-->
+<!--              </div>-->
               <div *ngIf="post?.userName === loggedInUserId && !isAdmin"
                    class="col-md-1 d-flex justify-content-end">
                 <span class="fa-solid fa-flag" ngbTooltip="Your Posts" style="color: #3d5af1"></span>
@@ -91,9 +91,12 @@
               <div [ngbCollapse]="!isNotCollapsed[i] && post?.description.length > 115">
                 <p class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">{{post?.description}}</p>
               </div>
-              <span *ngIf="post?.comment?.length > 1"><strong>Comments</strong><hr></span>
-<!--              <img *ngIf="post?.images" class="img-fluid" src="assets\{{post?.images}}" alt="">-->
-              <ng-container *ngFor="let data of post?.comment; let j = index;">
+              <img *ngIf="post?.images?.length > 0" class="img-fluid" src="assets\image\{{post?.images}}" alt="" height="400px" width="600px">
+              <span *ngIf="post?.images?.length > 0"><hr></span>
+              <button class="btn btn-primary" (click)="onWriteComment(post)"><i class="fa fa-comment"></i> Comments</button>
+              <span *ngIf="post?.comment?.length > 0"><hr></span>
+<!--              <strong>Comments</strong>-->
+              <ng-container *ngFor="let data of post?.comment; let j = index; let l = last;">
                 <div *ngIf="showAllComments ?  j : j<4" class="row">
                   <h6>{{data?.text}}</h6>
                   <div class="col-md-7">
@@ -102,12 +105,12 @@
                   <div class="col-md-5">
                     <span> Posted at: {{data?.createdDate | date}} </span>
                   </div>
-<!--                  <hr>-->
+                  <span *ngIf="!l"><hr></span>
                 </div>
               </ng-container>
             </ng-container>
 <!--            <p class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">{{post?.content}}</p>-->
-            <hr>
+<!--            <hr>-->
 <!--            <div class="row">-->
 <!--              <div class="col-md-7" >-->
 <!--                <strong style="color: #3d5af1">Posted By: </strong> <span>{{post?.userName | titlecase}}</span>-->
@@ -169,8 +172,6 @@
 <!--    </div>-->
 <!--  </div>-->
 </div>
-
-<app-scrolltotop></app-scrolltotop>
 
 <!--<ngx-spinner>-->
 <!--  <app-spinner></app-spinner>-->

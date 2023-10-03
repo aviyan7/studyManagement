@@ -1,9 +1,3 @@
-
-img {
-  max-width: 400px;
-  max-height: 400px;
-}
-
 .scrollable-section {
   overflow: auto;
   /*height: 90vh;*/

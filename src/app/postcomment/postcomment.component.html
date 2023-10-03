@@ -1,0 +1,53 @@
+<div class="modal-content">
+  <form [formGroup]="commentReviewForm">
+    <div class="modal-header flex-column">
+      <div class="row">
+        <div class="col-sm-12">
+          <h4>Write Your Comment</h4>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="comment">Your Comment Message</label>
+            <textarea
+              type="text"
+              rows="5"
+              class="form-control"
+              id="comment"
+              name="comment"
+              required
+              formControlName="comment"
+              placeholder="Comment down what do you think ?">
+            </textarea>
+
+            <span
+              *ngIf="submitted || form['comment']?.touched || form['comment'].dirty && form['comment'].invalid"
+              class="info-msg text-danger">
+                  <small *ngIf="form['comment'].errors && form['comment'].errors?.['required']">This is the required field.</small>
+                  <small *ngIf="form['comment'].errors && form['comment'].errors?.['minlength']">Should have min 4 characters.</small>
+                  <small *ngIf="form['comment'].errors && form['comment'].errors?.['maxlength']">Should contains max 1500 characters.</small>
+                </span>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer justify-content-center">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group text-center">
+            <button data-dismiss="modal" (click)="onCancel()" class="btn btn-primary me-2">
+              Cancel
+            </button>
+            <button class="btn btn-primary ms-2" (click)="onClickPostComment()">
+              Post Comment
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

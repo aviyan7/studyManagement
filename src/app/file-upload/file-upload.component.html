@@ -1,44 +1,47 @@
-<div class="row">
-  <div class="col-8">
-    <label class="btn btn-default p-0">
-      <!--      accept="image/*"-->
-      <input type="file"  multiple (change)="selectFiles($event)" />
-    </label>
+<div class="row scrollable-section">
+  <div class="row">
+    <div class="col-8">
+      <label class="btn btn-default p-0">
+        <!--      accept="image/*"-->
+        <input type="file"  multiple (change)="selectFiles($event)" />
+      </label>
+    </div>
+
+    <div class="col-4">
+      <button
+        class="btn btn-success btn-sm"
+        [disabled]="!selectedFiles"
+        (click)="uploadFiles()"
+      >
+        Upload
+      </button>
+    </div>
   </div>
 
-  <div class="col-4">
-    <button
-      class="btn btn-success btn-sm"
-      [disabled]="!selectedFiles"
-      (click)="uploadFiles()"
+  <div *ngFor='let preview of previews'>
+    <img [src]="preview" class="preview mb-2">
+    <i class="fa fa-trash" (click)="deletePreview(preview)"></i>
+  </div>
+
+  <div *ngIf="message.length" class="alert alert-secondary my-3" role="alert">
+    <ul *ngFor="let msg of message; let i = index">
+      <li>{{ msg }}</li>
+    </ul>
+  </div>
+
+  <div class="card mt-3" *ngIf="imageInfos">
+    <div class="card-header">List of Images</div>
+    <ul
+      class="list-group list-group-flush"
+      *ngFor="let image of imageInfos | async"
     >
-      Upload
-    </button>
+      <li class="list-group-item">
+        <!--      <p><a href="assets\{{image.name}}">{{ image.name }}</a></p>-->
+        <img src="assets\{{image.name}}" alt="{{ image.name }}" height="80px" />
+        <!--  <button *ngIf="previews" (click)="deletePreview()" class="mt-2">Delete Preview</button>-->
+      </li>
+    </ul>
   </div>
 </div>
 
-<div *ngFor='let preview of previews'>
-  <img [src]="preview" class="preview mb-2">
-  <i class="fa fa-trash" (click)="deletePreview(preview)"></i>
-</div>
-
-<div *ngIf="message.length" class="alert alert-secondary my-3" role="alert">
-  <ul *ngFor="let msg of message; let i = index">
-    <li>{{ msg }}</li>
-  </ul>
-</div>
-
-<div class="card mt-3" *ngIf="imageInfos">
-  <div class="card-header">List of Images</div>
-  <ul
-    class="list-group list-group-flush"
-    *ngFor="let image of imageInfos | async"
-  >
-    <li class="list-group-item">
-      <!--      <p><a href="assets\{{image.name}}">{{ image.name }}</a></p>-->
-      <img src="assets\{{image.name}}" alt="{{ image.name }}" height="80px" />
-      <!--  <button *ngIf="previews" (click)="deletePreview()" class="mt-2">Delete Preview</button>-->
-    </li>
-  </ul>
-</div>
 

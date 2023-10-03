@@ -31,6 +31,11 @@ import { ScrolltotopComponent } from './scrolltotop/scrolltotop.component';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { SubGroupComponent } from './sub-group/sub-group.component';
+import { PostcommentComponent } from './postcomment/postcomment.component';
+import { ViewPostComponent } from './view-post/view-post.component';
+import { CreateSubgroupComponent } from './create-subgroup/create-subgroup.component';
+import { SearchComponent } from './search/search.component';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +59,11 @@ import { SubGroupComponent } from './sub-group/sub-group.component';
     CreatePostComponent,
     FileUploadComponent,
     SubGroupComponent,
+    PostcommentComponent,
+    ViewPostComponent,
+    CreateSubgroupComponent,
+    SearchComponent,
+    SearchResultComponent,
   ],
     imports: [
         BrowserModule,
