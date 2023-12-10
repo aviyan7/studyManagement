@@ -60,7 +60,7 @@ export class ApiService {
   }
 
   register(userDetails: any) {
-    return this.httpClient.post(ApiService.baseApi + 'register', userDetails);
+    return this.httpClient.post(ApiService.baseApi + 'auth/register', userDetails);
   }
 
   getRelatedArticles(id: number) {

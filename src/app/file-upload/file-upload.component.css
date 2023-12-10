@@ -22,3 +22,7 @@ img {
 .scrollable-section::-webkit-scrollbar-track {
   background-color: transparent;
 }
+
+.ss-img{
+  max-height: 5px;
+}

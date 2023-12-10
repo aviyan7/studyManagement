@@ -18,6 +18,7 @@ import {CreatePostComponent} from "./create-post/create-post.component";
 import {SubGroupComponent} from "./sub-group/sub-group.component";
 import {ViewPostComponent} from "./view-post/view-post.component";
 import {CreateSubgroupComponent} from "./create-subgroup/create-subgroup.component";
+import {SearchResultComponent} from "./search-result/search-result.component";
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -27,11 +28,12 @@ const routes: Routes = [
   {path: 'post-grievance', component: PostGrievanceComponent, canActivate: [AuthGuard, UserGuard]},
   {path: 'post', component: CreatePostComponent, canActivate: [AuthGuard, UserGuard]},
   {path: 'view-post/:name', component: ViewPostComponent},
-  {path: 'group', component: SubGroupComponent, canActivate: [AuthGuard, UserGuard]},
+  {path: 'group', component: SubGroupComponent, canActivate: [AuthGuard]},
   {path: 'create-group', component: CreateSubgroupComponent, canActivate: [AuthGuard, UserGuard]},
   {path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard, AdminGuard]},
   {path: 'users', component: AllUsersComponent, canActivate: [AuthGuard, AdminGuard]},
   {path: 'user-approval-request', component: ApprovalRequestComponent, canActivate: [AuthGuard, AdminGuard]},
+  {path: 'search-result', component: SearchResultComponent, canActivate:[AuthGuard, AdminGuard, UserGuard]},
   {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
   {path: 'my-grievances', component: MyGrievanceComponent, canActivate: [AuthGuard, UserGuard]},
   {path: '**', component: ErrorComponent},

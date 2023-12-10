@@ -5,6 +5,7 @@ import {NgxSpinnerService} from "ngx-spinner";
 import {NgToastService} from "ng-angular-popup";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {SearchResultComponent} from "../search-result/search-result.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-search',
@@ -21,6 +22,7 @@ export class SearchComponent implements OnInit {
               private apiService: ApiService,
               private spinner: NgxSpinnerService,
               private toastr: NgToastService,
+              private router: Router,
               private modalService: NgbModal) { }
 
   search() {
@@ -33,6 +35,7 @@ export class SearchComponent implements OnInit {
       this.spinner.hide();
       this.toastr.success({detail: 'Success', summary: 'Search Completed Successfully.', duration: 2000});
       this.searchKeyword = '';
+      this.router.navigate(['/search-result']);
       const option: NgbModalOptions = {
         backdrop: 'static',
         keyboard: false,
