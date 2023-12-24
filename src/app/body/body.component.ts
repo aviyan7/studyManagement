@@ -5,6 +5,7 @@ import {NgToastService} from "ng-angular-popup";
 import {NgxSpinnerService} from "ngx-spinner";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {PostcommentComponent} from "../postcomment/postcomment.component";
+import {Router} from "@angular/router";
 
 export enum Vote {
   upvote = 'upvote',
@@ -38,6 +39,7 @@ export class BodyComponent implements OnInit {
 
   constructor(private apiService: ApiService,
               private toastService: NgToastService,
+              private router: Router,
               private spinner: NgxSpinnerService,
               private modalService: NgbModal) { }
 
@@ -214,5 +216,10 @@ export class BodyComponent implements OnInit {
         this.modalService.dismissAll();
       }
     });
+  }
+
+  onViewPost(id: any){
+    this.router.navigate(['/view-post',id]);
+    console.log("chalxa");
   }
 }

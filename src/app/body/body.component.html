@@ -39,7 +39,7 @@
           <div [ngClass]="isAdmin ? 'col-md-12 ms-3 pe-5' : 'col-md-11'">
             <div class="col-md-12 row">
               <div class="col-md-10">
-                <h4 class="card-title mb-3" style="font-family: 'poppins', sans-serif; color: #4f4d4d"><b>{{post?.postName}}</b></h4>
+                <h4 class="card-title mb-3" style="font-family: 'poppins', sans-serif; color: #4f4d4d"><b (click)="onViewPost(post?.id)">{{post?.postName}}</b></h4>
               </div>
               <div class="row">
                 <div class="col-md-3" >

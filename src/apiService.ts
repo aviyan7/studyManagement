@@ -25,6 +25,13 @@ export class ApiService {
     return this.httpClient.get(ApiService.baseApi+'user/'+id);
   }
 
+  getPostById(id: any){
+    return this.httpClient.get(ApiService.baseApi+'post/'+id);
+  }
+
+  getRecommendedPosts(id: any){
+    return this.httpClient.get(ApiService.baseApi+'post/recommendation/'+id);
+  }
   getAllPosts(page?: number, size?: number) {
     let params;
     if(page && size){

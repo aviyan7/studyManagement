@@ -1,3 +1,67 @@
-<p>view-post works!</p>
-{{postName}}
+<div class="row data">
+  <div class="col-md-12">
+    <div class="mt-5 mb-5">
+      <div class="card card-body">
+        <div class="col-md-10">
+          <h4 class="card-title mb-3" style="font-family: 'poppins', sans-serif; color: #4f4d4d"><b>{{post?.postName}}</b></h4>
+        </div>
+        <div class="row">
+          <div class="col-md-3" >
+            <strong style="color: #3d5af1">Posted By: </strong> <span>{{post?.userName | titlecase}}</span>
+          </div>
+          <div class="col-md-4" >
+            <strong style="color: #3d5af1">Posted At: </strong> <span>{{post?.subGroupName?.name | titlecase}}</span>
+          </div>
+          <div class="col-md-5">
+            <strong><span style="color: #3d5af1">Posted on</span>: </strong>{{post?.createdDate | date : 'MMM dd, yyyy | hh:mm:ss a'}}
+          </div>
+          <hr>
+          <div>
+            <div class="row">
+              <div class="col-md-11">
+                    <span class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">
+                      {{post?.description}}
+                    </span>
+              </div>
+            </div>
+            <ng-container>
+              <img *ngIf="post?.images?.length > 0" class="img-fluid" src="assets\image\{{post?.images}}" alt="" height="250px" width="450px">
+              <span *ngIf="post?.images?.length > 0"><hr></span>
+              <button class="btn btn-primary"><i class="fa fa-comment"></i> Comments</button>
+              <span *ngIf="post?.comment?.length > 0"><hr></span>
+              <ng-container *ngFor="let data of post?.comment; let j = index; let l = last;">
+                <div class="row">
+                  <h6>{{data?.text}}</h6>
+                  <div class="col-md-7">
+                    <span>Posted By:{{data?.userName | titlecase}}</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span> Posted at: {{data?.createdDate | date}} </span>
+                  </div>
+                  <span *ngIf="!l"><hr></span>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-md-4 mb-4" *ngFor="let r of recommendedPosts; let i = index;">
+          <div class="card">
+            <img src="assets\image\{{r?.images}}" class="card-img-top" alt="Post Image">
+            <div class="card-body">
+              <h5 class="card-title">{{r?.postName}}</h5>
+              <p class="card-text">{{r?.description}}</p>
+              <a href="#" class="btn btn-primary" (click)="redirectTo(r?.id)">Read More</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+</div>
 <button (click)="onBack()">Back</button>
+</div>

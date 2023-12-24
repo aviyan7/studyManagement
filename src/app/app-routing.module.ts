@@ -27,7 +27,7 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'post-grievance', component: PostGrievanceComponent, canActivate: [AuthGuard, UserGuard]},
   {path: 'post', component: CreatePostComponent, canActivate: [AuthGuard, UserGuard]},
-  {path: 'view-post/:name', component: ViewPostComponent},
+  {path: 'view-post/:id', component: ViewPostComponent},
   {path: 'group', component: SubGroupComponent, canActivate: [AuthGuard]},
   {path: 'create-group', component: CreateSubgroupComponent, canActivate: [AuthGuard, UserGuard]},
   {path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard, AdminGuard]},
